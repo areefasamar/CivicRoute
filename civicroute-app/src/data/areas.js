@@ -26,6 +26,32 @@ export const AUTHORITIES = {
     description:
       'Responsible for road repairs, broken surfaces, and street lighting maintenance in this sample area.',
   },
+  authorityC: {
+    id: 'authorityC',
+    name: 'Sample Authority C — CBC Clifton',
+    shortName: 'CBC Clifton',
+    department: 'Public Health & Works',
+    city: 'Karachi',
+    email: 'publicworks@clifton-civic.example.com',
+    portal: 'clifton-civic.example.com',
+    helpline: '021-9999 0003',
+    handles: ['Sewage leak', 'Broken road', 'Streetlight not working', 'Garbage dumping'],
+    description:
+      'Oversees municipal maintenance, road surfaces, streetlights, and sanitation across Clifton and coastal zones.',
+  },
+  authorityD: {
+    id: 'authorityD',
+    name: 'Sample Authority D — TMC Korangi',
+    shortName: 'TMC Korangi',
+    department: 'Civic Infrastructure',
+    city: 'Karachi',
+    email: 'civic@korangi-works.example.com',
+    portal: 'korangi-works.example.com',
+    helpline: '021-9999 0004',
+    handles: ['Broken road', 'Garbage dumping'],
+    description:
+      'Responsible for neighborhood waste disposal, roads, and municipal sanitation in Korangi district.',
+  },
 };
 
 export const AREAS = [
@@ -36,7 +62,7 @@ export const AREAS = [
     block: 'Block 13-D',
     authorityId: 'authorityA',
     mapPinX: 68, // % from left in SVG viewport
-    mapPinY: 42, // % from top in SVG viewport
+    mapPinY: 40, // % from top in SVG viewport
   },
   {
     id: 'gulshan-6',
@@ -44,8 +70,8 @@ export const AREAS = [
     ward: 'Ward 08',
     block: 'Block 6',
     authorityId: 'authorityA',
-    mapPinX: 55,
-    mapPinY: 55,
+    mapPinX: 56,
+    mapPinY: 52,
   },
   {
     id: 'nazimabad-2',
@@ -53,8 +79,17 @@ export const AREAS = [
     ward: 'Ward 12',
     block: 'Block 2',
     authorityId: 'authorityB',
-    mapPinX: 28,
-    mapPinY: 48,
+    mapPinX: 26,
+    mapPinY: 44,
+  },
+  {
+    id: 'north-nazimabad-h',
+    label: 'North Nazimabad, Block H',
+    ward: 'Ward 05',
+    block: 'Block H',
+    authorityId: 'authorityB',
+    mapPinX: 32,
+    mapPinY: 24,
   },
   {
     id: 'saddar-empress',
@@ -62,8 +97,53 @@ export const AREAS = [
     ward: 'Ward 03',
     block: 'Empress Market',
     authorityId: 'authorityB',
-    mapPinX: 20,
-    mapPinY: 70,
+    mapPinX: 18,
+    mapPinY: 68,
+  },
+  {
+    id: 'clifton-4',
+    label: 'Clifton, Block 4 (Sea View Zone)',
+    ward: 'Ward 02',
+    block: 'Block 4',
+    authorityId: 'authorityC',
+    mapPinX: 32,
+    mapPinY: 82,
+  },
+  {
+    id: 'pechs-2',
+    label: 'PECHS, Block 2 (Tariq Road Area)',
+    ward: 'Ward 09',
+    block: 'Block 2',
+    authorityId: 'authorityB',
+    mapPinX: 46,
+    mapPinY: 62,
+  },
+  {
+    id: 'bahadurabad',
+    label: 'Bahadurabad, Char Minar Chowrangi',
+    ward: 'Ward 10',
+    block: 'Char Minar',
+    authorityId: 'authorityA',
+    mapPinX: 60,
+    mapPinY: 66,
+  },
+  {
+    id: 'korangi-15',
+    label: 'Korangi, Sector 15 (Industrial Area)',
+    ward: 'Ward 14',
+    block: 'Sector 15',
+    authorityId: 'authorityD',
+    mapPinX: 78,
+    mapPinY: 74,
+  },
+  {
+    id: 'malir-falcon',
+    label: 'Malir Cantt, Falcon Complex',
+    ward: 'Ward 16',
+    block: 'Falcon Complex',
+    authorityId: 'authorityA',
+    mapPinX: 84,
+    mapPinY: 28,
   },
 ];
 

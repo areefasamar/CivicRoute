@@ -7,7 +7,7 @@ CivicRoute is a mobile-first civic utility web application designed to connect c
 - **Mobile-first design**: Centered max-width container (390px) matching real phone specifications.
 - **Simulated Authentication**: Email/password validation and simulated Google Sign-In.
 - **Terms & Civic Consent**: Mandatory agreement gate before proceeding.
-- **Interactive Location Routing**: 4 sample areas mapped to 2 municipal authorities (TMC Gulshan and Saddar Works) with an illustrative interactive vector map.
+- **Interactive Location Routing**: 10 prominent Karachi neighborhoods mapped to 4 municipal authorities (TMC Gulshan, Saddar Works, CBC Clifton, and TMC Korangi) with an interactive vector map.
 - **Issue Reporting, Photo & Voice Note**: 4 issue categories with automatic authority compatibility detection, local photo preview, real-time voice speech-to-text dictation, and voice recording note attachment.
 - **Trilingual Formal Letter & App UI (English, Urdu & Sindhi)**: Complete interface and complaint letter generation in English, Urdu (اردو), and Sindhi (سنڌي), featuring tailored RTL layouts and typography (`Noto Sans Arabic` for Sindhi, `Noto Nastaliq Urdu` for Urdu).
 - **Simulated Dispatch & Receipt**: 1.5-second simulated sending state generating a unique tracking reference (`CR-YYYYMMDD-XXXX`) with tap-to-copy contacts and portal links.

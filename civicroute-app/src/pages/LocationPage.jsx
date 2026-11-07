@@ -100,7 +100,7 @@ export default function LocationPage() {
               {dropdownOpen && (
                 <ul
                   role="listbox"
-                  className="absolute z-20 w-full mt-1 rounded-xl overflow-hidden"
+                  className="absolute z-20 w-full mt-1 rounded-xl overflow-hidden max-h-64 overflow-y-auto"
                   style={{ background: '#ffffff', boxShadow: '0 8px 24px rgba(45,30,24,0.12)', border: '1px solid #e5dfd5' }}
                 >
                   {AREAS.map(area => (
@@ -128,7 +128,7 @@ export default function LocationPage() {
               )}
             </div>
             <p className="text-xs px-1" style={{ color: '#4f4541' }}>
-              Sample areas include Gulshan-e-Iqbal, Nazimabad and Saddar.
+              Sample areas include Gulshan, Nazimabad, Saddar, Clifton, PECHS, Korangi, and more.
             </p>
           </div>
 
@@ -170,10 +170,10 @@ export default function LocationPage() {
                   aria-label={`Select ${area.label}`}
                 >
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-all ${isSelected ? 'animate-bounce' : ''}`}
-                    style={{ background: isSelected ? '#2d1e18' : '#ffffff', border: '2px solid #2d1e18' }}
+                    className={`${isSelected ? 'w-8 h-8 animate-bounce' : 'w-6 h-6 hover:scale-110'} rounded-full flex items-center justify-center shadow-md transition-all`}
+                    style={{ background: isSelected ? '#2d1e18' : '#ffffff', border: isSelected ? '2px solid #2d1e18' : '1.5px solid #775746' }}
                   >
-                    <span className="material-symbols-outlined filled" style={{ fontSize: isSelected ? 20 : 16, color: isSelected ? '#ffffff' : '#775746', fontVariationSettings: "'FILL' 1" }}>location_on</span>
+                    <span className="material-symbols-outlined filled" style={{ fontSize: isSelected ? 18 : 13, color: isSelected ? '#ffffff' : '#775746', fontVariationSettings: "'FILL' 1" }}>location_on</span>
                   </div>
                   {isSelected && (
                     <div className="mt-1 px-2.5 py-1 rounded-full shadow-sm text-center" style={{ background: '#140804' }}>
