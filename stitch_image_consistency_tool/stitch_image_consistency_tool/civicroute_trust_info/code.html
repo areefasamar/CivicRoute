@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary": "#ffffff", "on-surface-variant": "#4f4541", "inverse-on-surface": "#f3f0ea", "outline": "#817470", "on-tertiary-container": "#b0803f", "on-error-container": "#93000a", "on-secondary-fixed": "#2c1608", "tertiary-fixed": "#ffddb6", "background": "#fcf9f3", "secondary-fixed": "#ffdbc9", "inverse-surface": "#31312d", "primary-fixed-dim": "#dbc1b7", "primary-container": "#2d1e18", "secondary-container": "#ffd4bd", "surface-container-low": "#f6f3ed", "on-tertiary-fixed-variant": "#643f00", "surface-container-lowest": "#ffffff", "tertiary-container": "#321d00", "on-background": "#1c1c18", "on-primary-fixed": "#271812", "primary": "#140804", "surface-bright": "#fcf9f3", "error": "#ba1a1a", "inverse-primary": "#dbc1b7", "secondary": "#775746", "tertiary-fixed-dim": "#f4bc75", "on-secondary-container": "#7a5a48", "on-error": "#ffffff", "on-surface": "#1c1c18", "surface-variant": "#e5e2dc", "on-tertiary-fixed": "#2a1800", "surface-dim": "#dcdad4", "tertiary": "#130900", "surface-tint": "#6e5a52", "on-tertiary": "#ffffff", "surface-container-high": "#ebe8e2", "error-container": "#ffdad6", "on-secondary": "#ffffff", "primary-fixed": "#f8ddd3", "surface-container-highest": "#e5e2dc", "on-primary-container": "#9b847b", "secondary-fixed-dim": "#e7bea8", "surface": "#fcf9f3", "on-secondary-fixed-variant": "#5d4030", "on-primary-fixed-variant": "#55433c", "surface-container": "#f0eee8", "outline-variant": "#d2c3be" }, borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" }, spacing: { "space-sm": "0.5rem", gutter: "1rem", margin: "1.25rem", "space-md": "1rem", "space-xl": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem" }, fontFamily: { "headline-xl": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "mono-receipt": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"] }, fontSize: { "headline-xl": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "700" }], "headline-lg": ["26px", { lineHeight: "34px", letterSpacing: "-0.015em", fontWeight: "700" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }], "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }], "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600" }], "mono-receipt": ["13px", { lineHeight: "18px", letterSpacing: "0.05em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#fcf9f3;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-secondary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(45,30,24,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 -ml-space-xs flex items-center justify-center rounded-full text-primary hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><img alt="CivicRoute Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDCSXsn7P3npzchaKICLLKf3KWUmL-ayFX2LV5c8a7W1F7Ml1v3yz5m6qLNqCWsxgF33P4_Qqh-liTmRZjdtP4h9VgdqTFwJ2QtTxc0IRAI9onWe6Z4FMjY7BB_UKxHKyfNJ1FK9xEw45-sucugMixQJF8tAdfWiMhYWWsWV0V2Wt5rWvCsH22VIdkXAoelZQRgfNBoQPp7jSExnZNyziALc9SA8-ALqR8gQrxhNddccA"/><span class="font-label-lg text-label-lg text-primary tracking-tight ml-space-xs">CivicRoute</span></div><div class="flex items-center gap-space-sm"><span class="font-label-md text-label-md text-on-surface-variant truncate max-w-[120px]">Location Selection</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full px-margin pb-space-xl">
+<!-- Top Utility Context Bar (Demo Tag Indicator) -->
+<div class="flex items-center justify-between py-space-xs mb-space-md">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Citizen Transparency</span>
+</div>
+<span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-surface-container-highest text-primary font-label-sm text-label-sm tracking-widest font-bold">
+      DEMO
+    </span>
+</div>
+<!-- Hero Shield Emblem & Overhead Tag -->
+<div class="flex flex-col items-start gap-space-md mb-space-lg">
+<div class="w-14 h-14 rounded-full bg-secondary-container/60 shadow-sm flex items-center justify-center transition-transform hover:scale-105">
+<div class="w-11 h-11 rounded-full bg-primary flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-secondary-fixed text-[24px]">verified_user</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="inline-flex items-center self-start px-space-sm py-0.5 rounded-md bg-surface-container-high text-secondary font-label-sm text-label-sm tracking-wider uppercase font-bold">
+        BEFORE WE BEGIN
+      </span>
+<h1 class="font-headline-xl text-headline-xl text-primary tracking-tight leading-tight">
+        A little trust.<br/>A clear way forward.
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 leading-relaxed">
+        Here's how CivicRoute helps you report a local issue responsibly.
+      </p>
+</div>
+</div>
+<!-- Trust Guarantee Feature Cards -->
+<div class="flex flex-col gap-space-md mb-space-lg">
+<!-- Item 1: Location -->
+<div class="group flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex-shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-0.5">Location with a purpose</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-normal">
+          Choose an area to find its responsible authority. Precise GPS access is optional.
+        </p>
+</div>
+</div>
+<!-- Item 2: Information Security -->
+<div class="group flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex-shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">shield_person</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-0.5">Your information stays yours</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-normal">
+          Your email, description and photo are used to prepare your complaint. Never include CNIC numbers or sensitive personal details.
+        </p>
+</div>
+</div>
+<!-- Item 3: Autonomous Review -->
+<div class="group flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex-shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-0.5">You review. You decide.</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-normal">
+          Check the letter and recipient before sending. CivicRoute helps route reports; it does not guarantee a response or resolution.
+        </p>
+</div>
+</div>
+</div>
+<!-- Trust Policy Links -->
+<div class="flex items-center gap-space-xs font-label-md text-label-md mb-space-lg text-secondary">
+<button class="underline underline-offset-4 hover:text-primary transition-colors focus:outline-none" type="button">
+      Read Terms
+    </button>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<button class="underline underline-offset-4 hover:text-primary transition-colors focus:outline-none" type="button">
+      Read Privacy Policy
+    </button>
+</div>
+<!-- Interactive Agreement Checkbox Card -->
+<div class="flex flex-col gap-space-md pt-space-xs">
+<label class="flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-low shadow-sm cursor-pointer select-none transition-colors hover:bg-surface-container">
+<div class="relative flex items-center justify-center mt-0.5">
+<input class="sr-only peer" id="agreement-checkbox" type="checkbox"/>
+<div class="w-5 h-5 rounded-md bg-surface-container-lowest shadow-inner flex items-center justify-center peer-checked:bg-primary peer-checked:text-on-primary transition-all">
+<span class="material-symbols-outlined text-[16px] opacity-0 peer-checked:opacity-100 transition-opacity font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-primary">
+          I agree to the Terms and Privacy Policy
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Acknowledges responsible civic conduct and public reporting standards.
+        </span>
+</div>
+</label>
+<!-- Guided Hint Pill (State-dependent) -->
+<div class="flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm transition-all duration-300" id="hint-pill">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span>When checked, Continue becomes enabled.</span>
+</div>
+<!-- Bottom Action CTA Button -->
+<button class="w-full h-12 flex items-center justify-center gap-space-sm rounded-xl font-label-lg text-label-lg shadow-sm bg-surface-variant text-outline cursor-not-allowed transition-all duration-200" disabled="" id="continue-button" type="button">
+<span>Continue</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<!-- Supplemental Brand Guarantee Footnote -->
+<div class="flex items-center justify-center gap-space-xs pt-space-xs text-on-surface-variant opacity-80">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="font-label-sm text-label-sm tracking-wide">End-to-end civic encryption • Unbiased public routing</span>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    const checkbox = document.getElementById('agreement-checkbox');
+    const button = document.getElementById('continue-button');
+    const hintPill = document.getElementById('hint-pill');
+
+    if (!checkbox || !button || !hintPill) return;
+
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        button.removeAttribute('disabled');
+        button.className = "w-full h-12 flex items-center justify-center gap-space-sm rounded-xl font-label-lg text-label-lg shadow-md bg-primary text-on-primary hover:bg-primary-container active:scale-[0.99] cursor-pointer transition-all duration-200";
+        hintPill.className = "flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-secondary-container/50 text-on-secondary-fixed font-label-sm text-label-sm transition-all duration-300";
+        hintPill.innerHTML = '<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span><span>Agreement verified. Ready to proceed.</span>';
+      } else {
+        button.setAttribute('disabled', 'true');
+        button.className = "w-full h-12 flex items-center justify-center gap-space-sm rounded-xl font-label-lg text-label-lg shadow-sm bg-surface-variant text-outline cursor-not-allowed transition-all duration-200";
+        hintPill.className = "flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm transition-all duration-300";
+        hintPill.innerHTML = '<span class="material-symbols-outlined text-[16px] text-secondary">info</span><span>When checked, Continue becomes enabled.</span>';
+      }
+    });
+
+    button.addEventListener('click', function () {
+      if (!this.hasAttribute('disabled')) {
+        this.classList.add('scale-[0.98]');
+        setTimeout(() => {
+          this.classList.remove('scale-[0.98]');
+        }, 150);
+      }
+    });
+  })();
+</script></main></body></html>
