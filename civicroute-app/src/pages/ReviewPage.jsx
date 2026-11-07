@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { AUTHORITIES } from '../data/areas';
 import { generateLetter } from '../lib/generateLetter';
+import { translations } from '../data/translations';
 import AppHeader from '../components/AppHeader';
 import StepBar from '../components/StepBar';
 
@@ -16,11 +17,13 @@ function generateRefNumber() {
 export default function ReviewPage() {
   const navigate = useNavigate();
   const { state, update } = useApp();
-  const [lang, setLang] = useState(state.letterLang || 'en');
+  const appLang = state.lang || 'en';
+  const [lang, setLang] = useState(state.letterLang || appLang);
   const [letterText, setLetterText] = useState('');
   const [sending, setSending] = useState(false);
   const [editing, setEditing] = useState(false);
 
+  const t = translations[appLang] || translations.en;
   const authority = state.selectedArea ? AUTHORITIES[state.selectedArea.authorityId] : null;
 
   // Generate letter whenever deps change
@@ -32,10 +35,12 @@ export default function ReviewPage() {
       area: state.selectedArea,
       issue: state.selectedIssue,
       description: state.description,
+      hasVoice: !!state.voiceNoteUrl,
+      hasPhoto: !!state.photoPreviewUrl,
       lang,
     });
     setLetterText(text);
-  }, [lang, state.selectedArea, state.selectedIssue, state.description, state.email]);
+  }, [lang, state.selectedArea, state.selectedIssue, state.description, state.email, state.voiceNoteUrl, state.photoPreviewUrl]);
 
   function handleSend() {
     if (sending) return;
@@ -49,10 +54,29 @@ export default function ReviewPage() {
   }
 
   const isUrdu = lang === 'ur';
+  const isSindhi = lang === 'sd';
+  const isLetterRtl = isUrdu || isSindhi;
+  const letterFont = isSindhi
+    ? "'Noto Sans Arabic', system-ui, sans-serif"
+    : isUrdu
+    ? "'Noto Nastaliq Urdu', serif"
+    : 'inherit';
+
+  const langs = [
+    { code: 'en', label: 'English' },
+    { code: 'ur', label: 'اردو' },
+    { code: 'sd', label: 'سنڌي' },
+  ];
+
+  function getLangDisplay(code) {
+    if (code === 'sd') return 'سنڌي';
+    if (code === 'ur') return 'Urdu';
+    return 'English';
+  }
 
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
-      <AppHeader title="Formal Letter Preview" showBack={!sending} />
+      <AppHeader title={t.headers.review} showBack={!sending} />
       <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
         <div className="pb-10">
           <StepBar currentStep={3} completedUpTo={2} />
@@ -64,37 +88,45 @@ export default function ReviewPage() {
               style={{ background: 'rgba(255,212,189,0.5)' }}
             >
               <span className="material-symbols-outlined filled" style={{ fontSize: 14, color: '#7a5a48', fontVariationSettings: "'FILL' 1" }}>verified</span>
-              <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#7a5a48' }}>Your voice, clearly put</span>
+              <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#7a5a48' }}>
+                {t.review.badge}
+              </span>
             </div>
-            <h1 className="text-[26px] font-bold leading-[34px] tracking-tight" style={{ color: '#140804' }}>Review your letter</h1>
-            <p className="text-sm mt-0.5" style={{ color: '#4f4541' }}>Check the details before the final step.</p>
+            <h1 className="text-[26px] font-bold leading-[34px] tracking-tight" style={{ color: '#140804' }}>
+              {t.review.heading}
+            </h1>
+            <p className="text-sm mt-0.5" style={{ color: '#4f4541' }}>
+              {t.review.subtitle}
+            </p>
           </section>
 
           {/* Language + "To:" */}
           <section className="px-5 flex flex-col gap-3 mb-4">
-            {/* Language toggle */}
+            {/* Language toggle: English, Urdu, Sindhi */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold" style={{ color: '#4f4541' }}>Letter language</span>
+              <span className="text-xs font-semibold" style={{ color: '#4f4541' }}>
+                {t.review.letterLang}
+              </span>
               <div
                 className="inline-flex p-1 rounded-xl gap-1"
                 style={{ background: '#f0eee8', boxShadow: 'inset 0 1px 3px rgba(45,30,24,0.08)' }}
                 role="tablist"
               >
-                {['en', 'ur'].map(l => (
+                {langs.map(l => (
                   <button
-                    key={l}
+                    key={l.code}
                     type="button"
                     role="tab"
-                    aria-selected={lang === l}
-                    onClick={() => setLang(l)}
-                    className="px-3 py-1 rounded-lg text-xs font-semibold transition-all duration-200"
+                    aria-selected={lang === l.code}
+                    onClick={() => setLang(l.code)}
+                    className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-200"
                     style={{
-                      background: lang === l ? '#140804' : 'transparent',
-                      color: lang === l ? '#ffffff' : '#4f4541',
-                      boxShadow: lang === l ? '0 1px 3px rgba(45,30,24,0.15)' : 'none',
+                      background: lang === l.code ? '#140804' : 'transparent',
+                      color: lang === l.code ? '#ffffff' : '#4f4541',
+                      boxShadow: lang === l.code ? '0 1px 3px rgba(45,30,24,0.15)' : 'none',
                     }}
                   >
-                    {l === 'en' ? 'English' : 'اردو'}
+                    {l.label}
                   </button>
                 ))}
               </div>
@@ -106,12 +138,14 @@ export default function ReviewPage() {
               style={{ background: '#ffffff', border: '1px solid #e5dfd5', boxShadow: '0 2px 8px rgba(45,30,24,0.04)' }}
             >
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#4f4541' }}>To:</span>
+                <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#4f4541' }}>
+                  {t.review.toLabel}
+                </span>
                 <span
                   className="text-[11px] font-medium px-2 py-0.5 rounded"
                   style={{ background: 'rgba(244,188,117,0.2)', color: '#643f00' }}
                 >
-                  Sample contact · not deliverable
+                  {t.review.sampleContact}
                 </span>
               </div>
               <div className="flex items-center gap-2 mt-0.5">
@@ -148,23 +182,25 @@ export default function ReviewPage() {
               <div className="flex items-center justify-between pb-4 pt-1">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#140804' }}>description</span>
-                  <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#140804' }}>Complaint Letter</span>
+                  <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#140804' }}>
+                    {t.review.complaintLetter}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
                     className="text-[11px] font-medium px-2.5 py-1 rounded-full"
                     style={{ background: '#f0eee8', color: '#4f4541' }}
                   >
-                    Draft · {lang === 'en' ? 'English' : 'Urdu'}
+                    {t.review.draft} · {getLangDisplay(lang)}
                   </span>
                   <button
                     type="button"
                     onClick={() => setEditing(v => !v)}
-                    className="text-[11px] font-semibold px-2 py-0.5 rounded"
+                    className="text-[11px] font-semibold px-2 py-0.5 rounded hover:bg-[#f0eee8] transition-colors"
                     style={{ color: '#775746' }}
-                    aria-label={editing ? 'Stop editing' : 'Edit letter'}
+                    aria-label={editing ? t.review.done : t.review.edit}
                   >
-                    {editing ? 'Done' : 'Edit'}
+                    {editing ? t.review.done : t.review.edit}
                   </button>
                 </div>
               </div>
@@ -177,8 +213,8 @@ export default function ReviewPage() {
                     background: '#f6f3ed',
                     color: '#140804',
                     minHeight: 300,
-                    direction: isUrdu ? 'rtl' : 'ltr',
-                    fontFamily: isUrdu ? "'Noto Nastaliq Urdu', serif" : 'inherit',
+                    direction: isLetterRtl ? 'rtl' : 'ltr',
+                    fontFamily: letterFont,
                   }}
                   value={letterText}
                   onChange={e => setLetterText(e.target.value)}
@@ -186,8 +222,8 @@ export default function ReviewPage() {
                 />
               ) : (
                 <article
-                  dir={isUrdu ? 'rtl' : 'ltr'}
-                  style={{ fontFamily: isUrdu ? "'Noto Nastaliq Urdu', serif" : 'inherit' }}
+                  dir={isLetterRtl ? 'rtl' : 'ltr'}
+                  style={{ fontFamily: letterFont }}
                 >
                   <pre
                     className="text-sm leading-relaxed whitespace-pre-wrap"
@@ -202,7 +238,7 @@ export default function ReviewPage() {
 
           {/* Photo attachment chip */}
           {state.photoPreviewUrl && (
-            <section className="px-5 mb-5">
+            <section className="px-5 mb-3">
               <div
                 className="flex items-center justify-between p-3.5 rounded-xl"
                 style={{ background: '#ffffff', border: '1px solid #e5dfd5', boxShadow: '0 2px 8px rgba(45,30,24,0.04)' }}
@@ -218,13 +254,44 @@ export default function ReviewPage() {
                       {state.photoFile?.name || 'photo.jpg'}
                     </span>
                     <span className="text-xs" style={{ color: '#4f4541' }}>
-                      1 photo attached
+                      {t.review.photoAttached}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 pl-2 flex-shrink-0">
-                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>attach_file</span>
-                  <span className="text-xs font-semibold" style={{ color: '#775746' }}>View</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>photo_camera</span>
+                  <span className="text-xs font-semibold" style={{ color: '#775746' }}>{t.common.attached}</span>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Voice Note attachment chip */}
+          {state.voiceNoteUrl && (
+            <section className="px-5 mb-5">
+              <div
+                className="flex items-center justify-between p-3.5 rounded-xl"
+                style={{ background: '#ffffff', border: '1px solid #e5dfd5', boxShadow: '0 2px 8px rgba(45,30,24,0.04)' }}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: '#ffd4bd', color: '#7a5a48' }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: 20 }}>mic</span>
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-bold text-sm truncate" style={{ color: '#140804' }}>
+                      {t.review.voiceAttached}
+                    </span>
+                    <span className="text-xs" style={{ color: '#4f4541' }}>
+                      {state.voiceDuration ? `${state.voiceDuration}s audio` : 'Audio clip'} · {t.common.attached}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 pl-2 flex-shrink-0">
+                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>graphic_eq</span>
+                  <span className="text-xs font-semibold" style={{ color: '#775746' }}>{t.common.attached}</span>
                 </div>
               </div>
             </section>
@@ -247,12 +314,17 @@ export default function ReviewPage() {
               {sending ? (
                 <>
                   <span className="material-symbols-outlined animate-spin" style={{ fontSize: 19 }}>progress_activity</span>
-                  <span>Sending…</span>
+                  <span>{t.review.sending}</span>
                 </>
               ) : (
                 <>
-                  <span>Send complaint</span>
-                  <span className="material-symbols-outlined" style={{ fontSize: 19 }}>send</span>
+                  <span>{t.review.sendComplaint}</span>
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: 19, transform: t.dir === 'rtl' ? 'scaleX(-1)' : 'none' }}
+                  >
+                    send
+                  </span>
                 </>
               )}
             </button>
@@ -266,11 +338,11 @@ export default function ReviewPage() {
                   {sending ? 'progress_activity' : 'check_circle'}
                 </span>
                 <span className="text-[11px] font-medium">
-                  {sending ? 'Dispatching simulated complaint…' : 'Ready to send'}
+                  {sending ? t.review.dispatching : t.review.readyToSend}
                 </span>
               </div>
               <p className="text-xs text-center px-4" style={{ color: '#817470' }}>
-                Demo only. No email will be sent to an authority.
+                {t.review.demoDisclaimer}
               </p>
             </div>
           </section>

@@ -2,16 +2,25 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { ISSUE_TYPES, AUTHORITIES } from '../data/areas';
+import { translations } from '../data/translations';
 import AppHeader from '../components/AppHeader';
 import StepBar from '../components/StepBar';
+import VoiceRecorder from '../components/VoiceRecorder';
 
 export default function ReportPage() {
   const navigate = useNavigate();
   const { state, update } = useApp();
+  const lang = state.lang || 'en';
+  const t = translations[lang] || translations.en;
+  const isRtl = t.dir === 'rtl';
+
   const [selectedIssueId, setSelectedIssueId] = useState(state.selectedIssue?.id || '');
   const [description, setDescription] = useState(state.description || '');
   const [photoFile, setPhotoFile] = useState(state.photoFile || null);
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState(state.photoPreviewUrl || null);
+  const [voiceNoteBlob, setVoiceNoteBlob] = useState(state.voiceNoteBlob || null);
+  const [voiceNoteUrl, setVoiceNoteUrl] = useState(state.voiceNoteUrl || null);
+  const [voiceDuration, setVoiceDuration] = useState(state.voiceDuration || 0);
   const [issueError, setIssueError] = useState('');
   const fileInputRef = useRef(null);
 
@@ -38,19 +47,50 @@ export default function ReportPage() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   }
 
+  function handleVoiceTranscript(transcript) {
+    setDescription(prev => {
+      const trimmed = prev ? prev.trim() : '';
+      if (!trimmed) return transcript;
+      // If previous text already ends with this transcript, don't duplicate
+      if (trimmed.endsWith(transcript)) return trimmed;
+      return `${trimmed} ${transcript}`;
+    });
+  }
+
+  function handleVoiceRecorded({ blob, url, duration }) {
+    setVoiceNoteBlob(blob);
+    setVoiceNoteUrl(url);
+    setVoiceDuration(duration);
+  }
+
+  function handleRemoveVoice() {
+    if (voiceNoteUrl) URL.revokeObjectURL(voiceNoteUrl);
+    setVoiceNoteBlob(null);
+    setVoiceNoteUrl(null);
+    setVoiceDuration(0);
+  }
+
   function handleContinue() {
     if (!selectedIssue) {
-      setIssueError('Please select an issue type to continue.');
+      setIssueError(t.report.issueError);
       return;
     }
     setIssueError('');
-    update({ selectedIssue, description, photoFile, photoPreviewUrl });
+    update({
+      selectedIssue,
+      description,
+      photoFile,
+      photoPreviewUrl,
+      voiceNoteBlob,
+      voiceNoteUrl,
+      voiceDuration,
+    });
     navigate('/review');
   }
 
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
-      <AppHeader title="Issue Categorization" showBack={true} />
+      <AppHeader title={t.headers.report} showBack={true} />
       <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
         <div className="px-5 flex flex-col gap-5 pb-4">
           <StepBar currentStep={2} completedUpTo={1} />
@@ -61,10 +101,14 @@ export default function ReportPage() {
               className="self-start text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full"
               style={{ background: '#ffd4bd', color: '#7a5a48' }}
             >
-              MAKE IT CLEAR
+              {t.report.badge}
             </span>
-            <h1 className="text-[26px] font-bold leading-[34px] tracking-tight" style={{ color: '#140804' }}>What needs fixing?</h1>
-            <p className="text-sm" style={{ color: '#4f4541' }}>A few details help the right team take action.</p>
+            <h1 className="text-[26px] font-bold leading-[34px] tracking-tight" style={{ color: '#140804' }}>
+              {t.report.heading}
+            </h1>
+            <p className="text-sm" style={{ color: '#4f4541' }}>
+              {t.report.subtitle}
+            </p>
           </div>
 
           {/* Current location pill */}
@@ -75,7 +119,7 @@ export default function ReportPage() {
             <div className="flex items-center gap-2 min-w-0">
               <span className="material-symbols-outlined flex-shrink-0" style={{ fontSize: 20, color: '#775746' }}>location_on</span>
               <span className="font-semibold text-sm truncate" style={{ color: '#140804' }}>
-                {state.selectedArea?.label || 'No area selected'}
+                {state.selectedArea?.label || t.report.noAreaSelected}
               </span>
             </div>
             <button
@@ -84,24 +128,27 @@ export default function ReportPage() {
               className="font-semibold text-sm flex-shrink-0 ml-2 hover:underline"
               style={{ color: '#775746' }}
             >
-              Change
+              {t.common.change}
             </button>
           </div>
 
           {/* Issue selection grid */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <label className="font-semibold text-sm" style={{ color: '#140804' }}>Choose an issue</label>
+              <label className="font-semibold text-sm" style={{ color: '#140804' }}>
+                {t.report.chooseIssue}
+              </label>
             </div>
             <div className="grid grid-cols-2 gap-2.5">
               {ISSUE_TYPES.map(issue => {
                 const isSelected = issue.id === selectedIssueId;
+                const translatedLabel = t.issues[issue.id] || issue.label;
                 return (
                   <button
                     key={issue.id}
                     type="button"
                     onClick={() => { setSelectedIssueId(issue.id); setIssueError(''); }}
-                    className="flex flex-col justify-between p-3.5 h-24 rounded-xl text-left transition-all relative"
+                    className="flex flex-col justify-between p-3.5 h-24 rounded-xl text-left rtl:text-right transition-all relative"
                     style={{
                       background: isSelected ? '#ebe8e2' : '#ffffff',
                       border: isSelected ? '2px solid #2d1e18' : '1.5px solid #e5dfd5',
@@ -129,7 +176,7 @@ export default function ReportPage() {
                       className="text-xs leading-tight"
                       style={{ color: '#140804', fontWeight: isSelected ? 700 : 600 }}
                     >
-                      {issue.label}
+                      {translatedLabel}
                     </span>
                   </button>
                 );
@@ -148,7 +195,11 @@ export default function ReportPage() {
             >
               <span className="material-symbols-outlined flex-shrink-0" style={{ fontSize: 18, color: '#643f00' }}>info</span>
               <p className="text-xs leading-relaxed" style={{ color: '#643f00' }}>
-                <strong>{authority?.shortName}</strong> typically handles <strong>{authority?.handles.join(' and ')}</strong>. Your issue (<em>{selectedIssue?.label}</em>) may be managed by a different authority — you can still submit and they will route it appropriately.
+                {t.report.unhandledWarning(
+                  authority?.shortName || '',
+                  authority?.handles.join(' and ') || '',
+                  t.issues[selectedIssue?.id] || selectedIssue?.label || ''
+                )}
               </p>
             </div>
           )}
@@ -156,8 +207,10 @@ export default function ReportPage() {
           {/* Photo upload */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between mb-1">
-              <label className="font-semibold text-sm" style={{ color: '#140804' }}>Add a photo</label>
-              <span className="text-xs" style={{ color: '#817470' }}>Optional · up to 10 MB</span>
+              <label className="font-semibold text-sm" style={{ color: '#140804' }}>
+                {t.report.addPhoto}
+              </label>
+              <span className="text-xs" style={{ color: '#817470' }}>{t.report.photoTip}</span>
             </div>
 
             {photoPreviewUrl ? (
@@ -173,18 +226,18 @@ export default function ReportPage() {
                   />
                   <div className="absolute inset-0" style={{ background: 'rgba(20,8,4,0.08)' }} />
                   <span
-                    className="absolute bottom-2 left-2 px-2 py-0.5 rounded flex items-center gap-1 text-[11px] font-semibold"
+                    className="absolute bottom-2 left-2 rtl:left-auto rtl:right-2 px-2 py-0.5 rounded flex items-center gap-1 text-[11px] font-semibold"
                     style={{ background: 'rgba(45,30,24,0.75)', color: '#ffffff' }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 14 }}>photo_camera</span>
-                    Attached
+                    {t.common.attached}
                   </span>
                 </div>
                 <div className="flex items-center justify-between pt-0.5 px-0.5">
                   <div className="flex flex-col min-w-0">
                     <span className="font-semibold text-sm truncate" style={{ color: '#140804' }}>{photoFile?.name || 'photo.jpg'}</span>
                     <span className="text-xs" style={{ color: '#4f4541' }}>
-                      {photoFile ? `${(photoFile.size / (1024 * 1024)).toFixed(1)} MB` : ''} · Photo added
+                      {photoFile ? `${(photoFile.size / (1024 * 1024)).toFixed(1)} MB` : ''} · {t.report.photoAdded}
                     </span>
                   </div>
                   <button
@@ -194,7 +247,7 @@ export default function ReportPage() {
                     style={{ background: '#f0eee8', color: '#775746' }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 16 }}>delete</span>
-                    Remove
+                    {t.common.remove}
                   </button>
                 </div>
               </div>
@@ -210,8 +263,8 @@ export default function ReportPage() {
                 }}
               >
                 <span className="material-symbols-outlined" style={{ fontSize: 28, color: '#775746' }}>add_photo_alternate</span>
-                <span className="font-semibold text-sm" style={{ color: '#775746' }}>Tap to add a photo</span>
-                <span className="text-xs" style={{ color: '#817470' }}>JPG, PNG up to 10 MB</span>
+                <span className="font-semibold text-sm" style={{ color: '#775746' }}>{t.report.tapToAddPhoto}</span>
+                <span className="text-xs" style={{ color: '#817470' }}>{t.report.photoFormats}</span>
               </button>
             )}
             <input
@@ -224,11 +277,27 @@ export default function ReportPage() {
             />
           </div>
 
-          {/* Description */}
-          <div className="flex flex-col gap-2">
-            <label className="font-semibold text-sm" style={{ color: '#140804' }} htmlFor="description">
-              Tell us a little more
-            </label>
+          {/* Description + Voice Option */}
+          <div className="flex flex-col gap-2.5">
+            <div className="flex items-center justify-between">
+              <label className="font-semibold text-sm" style={{ color: '#140804' }} htmlFor="description">
+                {t.report.tellMore}
+              </label>
+              <span className="text-xs" style={{ color: '#817470' }}>{t.common.optional}</span>
+            </div>
+
+            {/* Voice recording & speech input component */}
+            <VoiceRecorder
+              lang={lang}
+              t={t.voice}
+              onTranscript={handleVoiceTranscript}
+              voiceNoteUrl={voiceNoteUrl}
+              voiceDuration={voiceDuration}
+              onVoiceRecorded={handleVoiceRecorded}
+              onRemoveVoice={handleRemoveVoice}
+            />
+
+            {/* Textarea for written or transcribed description */}
             <div
               className="rounded-xl p-3 transition-all"
               style={{
@@ -241,7 +310,7 @@ export default function ReportPage() {
                 id="description"
                 className="w-full bg-transparent text-sm placeholder:opacity-50 resize-none outline-none leading-relaxed"
                 style={{ color: '#140804' }}
-                placeholder="Describe what happened…"
+                placeholder={t.report.placeholder}
                 rows={4}
                 value={description}
                 onChange={e => setDescription(e.target.value)}
@@ -249,7 +318,7 @@ export default function ReportPage() {
             </div>
             <div className="flex items-center gap-1 px-1" style={{ color: '#817470' }}>
               <span className="material-symbols-outlined" style={{ fontSize: 15 }}>info</span>
-              <span className="text-xs">Keep it specific. Don't share personal details.</span>
+              <span className="text-xs">{t.report.privacyTip}</span>
             </div>
           </div>
 
@@ -265,10 +334,12 @@ export default function ReportPage() {
                 boxShadow: '0 4px 12px rgba(45,30,24,0.2)',
               }}
             >
-              <span>Generate complaint letter</span>
+              <span>{t.report.generateLetter}</span>
               <span className="material-symbols-outlined" style={{ fontSize: 18 }}>description</span>
             </button>
-            <p className="text-center text-[11px] mt-2" style={{ color: '#817470' }}>Step 2 of 4 · Auto-saves draft</p>
+            <p className="text-center text-[11px] mt-2" style={{ color: '#817470' }}>
+              {t.report.stepIndicator}
+            </p>
           </div>
         </div>
       </main>

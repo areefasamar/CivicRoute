@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { AREAS, AUTHORITIES } from '../data/areas';
+import { translations } from '../data/translations';
 import AppHeader from '../components/AppHeader';
 import StepBar from '../components/StepBar';
 
@@ -10,6 +11,10 @@ export default function LocationPage() {
   const { state, update } = useApp();
   const [selectedAreaId, setSelectedAreaId] = useState(state.selectedArea?.id || '');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const lang = state.lang || 'en';
+  const t = translations[lang] || translations.en;
+  const isRtl = t.dir === 'rtl';
 
   const selectedArea = AREAS.find(a => a.id === selectedAreaId) || null;
   const authority = selectedArea ? AUTHORITIES[selectedArea.authorityId] : null;
@@ -27,32 +32,45 @@ export default function LocationPage() {
 
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
-      <AppHeader title="Location Selection" showBack={true} />
+      <AppHeader title={t.headers.location} showBack={true} />
       <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
 
         {/* Demo bar */}
         <div className="px-5 pt-2 pb-1 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>verified_user</span>
-            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#4f4541' }}>Public Service Demo</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#4f4541' }}>
+              {t.terms.demoTag}
+            </span>
           </div>
-          <span className="text-[11px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full" style={{ background: '#ebe8e2', color: '#4f4541' }}>Demo</span>
+          <span
+            className="text-[11px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full"
+            style={{ background: '#ebe8e2', color: '#4f4541' }}
+          >
+            {t.common.demo}
+          </span>
         </div>
 
         <StepBar currentStep={1} completedUpTo={0} />
 
         {/* Section header */}
         <header className="px-5 pt-3 pb-2 flex flex-col gap-1">
-          <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#4f4541' }}>KNOW YOUR NEIGHBORHOOD</span>
-          <h1 className="text-[26px] font-bold leading-[34px] tracking-tight" style={{ color: '#140804' }}>Who looks after your street?</h1>
-          <p className="text-sm" style={{ color: '#4f4541' }}>Choose your area to find the right civic team.</p>
+          <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#4f4541' }}>
+            {t.location.badge}
+          </span>
+          <h1 className="text-[26px] font-bold leading-[34px] tracking-tight" style={{ color: '#140804' }}>
+            {t.location.heading}
+          </h1>
+          <p className="text-sm" style={{ color: '#4f4541' }}>
+            {t.location.subtitle}
+          </p>
         </header>
 
         <div className="px-5 flex flex-col gap-4 mt-2">
           {/* Area dropdown */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold" style={{ color: '#140804' }} htmlFor="area-select">
-              Your area in Karachi
+              {t.location.selectLabel}
             </label>
             <div className="relative">
               <button
@@ -71,7 +89,7 @@ export default function LocationPage() {
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="material-symbols-outlined" style={{ fontSize: 20, color: '#775746' }}>location_on</span>
                   <span className="font-semibold text-sm truncate" style={{ color: selectedArea ? '#140804' : '#817470' }}>
-                    {selectedArea ? selectedArea.label : 'Select an area…'}
+                    {selectedArea ? selectedArea.label : t.location.placeholder}
                   </span>
                 </div>
                 <span className="material-symbols-outlined" style={{ fontSize: 22, color: '#775746' }}>
@@ -90,7 +108,7 @@ export default function LocationPage() {
                       <button
                         type="button"
                         onClick={() => handleSelectArea(area)}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-left rtl:text-right transition-colors"
                         style={{
                           background: area.id === selectedAreaId ? '#f0eee8' : 'transparent',
                           color: '#140804',
@@ -109,7 +127,7 @@ export default function LocationPage() {
                 </ul>
               )}
             </div>
-            <p className="text-xs pl-1" style={{ color: '#4f4541' }}>
+            <p className="text-xs px-1" style={{ color: '#4f4541' }}>
               Sample areas include Gulshan-e-Iqbal, Nazimabad and Saddar.
             </p>
           </div>
@@ -184,7 +202,9 @@ export default function LocationPage() {
             >
               <div className="flex items-center gap-1.5">
                 <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#775746' }}>account_balance</span>
-                <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#775746' }}>RESPONSIBLE AUTHORITY</span>
+                <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#775746' }}>
+                  {t.location.authorityTitle}
+                </span>
               </div>
               <div className="flex flex-col">
                 <h2 className="font-semibold" style={{ color: '#140804', fontSize: 18, lineHeight: '24px' }}>{authority.shortName}</h2>
@@ -206,7 +226,7 @@ export default function LocationPage() {
               style={{ background: '#f6f3ed', border: '1px dashed #d2c3be' }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 20, color: '#817470' }}>account_balance</span>
-              <p className="text-sm" style={{ color: '#817470' }}>Select an area above to see the responsible authority.</p>
+              <p className="text-sm" style={{ color: '#817470' }}>{t.location.placeholder}</p>
             </div>
           )}
 
@@ -224,8 +244,13 @@ export default function LocationPage() {
                 boxShadow: selectedArea ? '0 4px 12px rgba(45,30,24,0.2)' : 'none',
               }}
             >
-              <span>Report an issue</span>
-              <span className="material-symbols-outlined" style={{ fontSize: 20 }}>arrow_forward</span>
+              <span>{t.location.continueBtn}</span>
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: 20, transform: isRtl ? 'scaleX(-1)' : 'none' }}
+              >
+                arrow_forward
+              </span>
             </button>
             <p className="text-xs text-center opacity-75" style={{ color: '#4f4541' }}>
               Illustrative authority assignment. Verify before use.

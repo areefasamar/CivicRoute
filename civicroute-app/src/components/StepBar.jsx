@@ -1,9 +1,18 @@
-// Step progress indicator shared across pages 1-4
-const STEPS = ['Location', 'Issue', 'Letter', 'Send'];
+import { useApp } from '../context/AppContext';
+import { translations } from '../data/translations';
 
 export default function StepBar({ currentStep, completedUpTo }) {
-  // currentStep: 1-indexed (1=Location, 2=Issue, 3=Letter, 4=Send)
-  // completedUpTo: how many steps are fully done
+  const { state } = useApp();
+  const currentLang = state.lang || 'en';
+  const t = translations[currentLang] || translations.en;
+
+  const STEPS = [
+    { key: 'location', label: t.steps.location },
+    { key: 'issue', label: t.steps.issue },
+    { key: 'letter', label: t.steps.letter },
+    { key: 'send', label: t.steps.send },
+  ];
+
   return (
     <div className="px-5 py-3">
       <div className="relative flex items-center justify-between max-w-sm mx-auto">
@@ -18,16 +27,16 @@ export default function StepBar({ currentStep, completedUpTo }) {
             className="absolute top-[14px] left-[14px] h-[2px] z-0 transition-all duration-500"
             style={{
               background: '#2d1e18',
-              width: `${((completedUpTo) / (STEPS.length - 1)) * 100}%`,
+              width: `${(completedUpTo / (STEPS.length - 1)) * 100}%`,
             }}
           />
         )}
-        {STEPS.map((label, i) => {
+        {STEPS.map((step, i) => {
           const stepNum = i + 1;
           const isCompleted = stepNum <= completedUpTo;
           const isActive = stepNum === currentStep;
           return (
-            <div key={label} className="flex flex-col items-center gap-1 z-10">
+            <div key={step.key} className="flex flex-col items-center gap-1 z-10">
               <div
                 className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm transition-all duration-300"
                 style={{
@@ -37,7 +46,9 @@ export default function StepBar({ currentStep, completedUpTo }) {
                 }}
               >
                 {isCompleted ? (
-                  <span className="material-symbols-outlined" style={{ fontSize: 15, fontVariationSettings: "'FILL' 1" }}>check</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 15, fontVariationSettings: "'FILL' 1" }}>
+                    check
+                  </span>
                 ) : (
                   <span className="text-xs font-semibold">{stepNum}</span>
                 )}
@@ -49,7 +60,7 @@ export default function StepBar({ currentStep, completedUpTo }) {
                   fontWeight: isActive ? 700 : 600,
                 }}
               >
-                {label}
+                {step.label}
               </span>
             </div>
           );

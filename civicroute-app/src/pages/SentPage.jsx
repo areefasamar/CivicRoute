@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { AUTHORITIES } from '../data/areas';
+import { translations } from '../data/translations';
 import AppHeader from '../components/AppHeader';
 import StepBar from '../components/StepBar';
 
 export default function SentPage() {
   const navigate = useNavigate();
   const { state, resetFlow } = useApp();
+  const lang = state.lang || 'en';
+  const t = translations[lang] || translations.en;
+
   const [toastMsg, setToastMsg] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
 
@@ -25,9 +29,9 @@ export default function SentPage() {
 
   function handleCopy(text, label) {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => showToast(`${label} copied!`));
+      navigator.clipboard.writeText(text).then(() => showToast(`${label} ${t.common.copied}`));
     } else {
-      showToast(`${label} copied!`);
+      showToast(`${label} ${t.common.copied}`);
     }
   }
 
@@ -36,9 +40,13 @@ export default function SentPage() {
     navigate('/location');
   }
 
+  const translatedIssue = state.selectedIssue
+    ? t.issues[state.selectedIssue.id] || state.selectedIssue.label
+    : '—';
+
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
-      <AppHeader title="Submission Receipt" showBack={false} />
+      <AppHeader title={t.headers.sent} showBack={false} />
       <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
         <div className="flex flex-col w-full">
           {/* Demo mode bar */}
@@ -48,13 +56,15 @@ export default function SentPage() {
                 className="w-2 h-2 rounded-full animate-pulse"
                 style={{ background: '#775746' }}
               />
-              <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#775746' }}>Simulation Complete</span>
+              <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#775746' }}>
+                {t.sent.simComplete}
+              </span>
             </div>
             <span
               className="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full"
               style={{ background: '#ebe8e2', color: '#4f4541' }}
             >
-              Demo Mode
+              {t.sent.demoMode}
             </span>
           </div>
 
@@ -77,10 +87,10 @@ export default function SentPage() {
               </div>
             </div>
             <h1 className="text-[26px] font-bold leading-[34px] tracking-tight mb-2" style={{ color: '#140804' }}>
-              Complaint sent
+              {t.sent.heading}
             </h1>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: '#4f4541' }}>
-              You've reached the end of the sample journey. No email was actually sent.
+              {t.sent.subtitle}
             </p>
           </div>
 
@@ -94,19 +104,23 @@ export default function SentPage() {
               <div className="flex items-center justify-between pb-1" style={{ borderBottom: '1px solid #f0eee8' }}>
                 <div className="flex items-center gap-1.5">
                   <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#775746' }}>receipt_long</span>
-                  <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#775746' }}>Complaint Receipt</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#775746' }}>
+                    {t.headers.sent}
+                  </span>
                 </div>
                 <span
                   className="text-[11px] font-medium px-2 py-0.5 rounded-full"
                   style={{ background: '#f0eee8', color: '#4f4541' }}
                 >
-                  Simulated
+                  {t.common.demo}
                 </span>
               </div>
 
               {/* Reference number */}
               <div className="rounded-lg p-3 flex flex-col" style={{ background: '#f6f3ed' }}>
-                <span className="text-[11px] uppercase tracking-wide" style={{ color: '#4f4541' }}>Reference Number</span>
+                <span className="text-[11px] uppercase tracking-wide" style={{ color: '#4f4541' }}>
+                  {t.sent.refNumber}
+                </span>
                 <div className="flex items-center justify-between mt-0.5">
                   <span
                     className="font-bold tracking-wider"
@@ -116,12 +130,12 @@ export default function SentPage() {
                   </span>
                   <button
                     type="button"
-                    onClick={() => handleCopy(state.refNumber || 'CR-20261107-0001', 'Reference')}
+                    onClick={() => handleCopy(state.refNumber || 'CR-20261107-0001', t.sent.refNumber)}
                     className="flex items-center gap-1 text-[11px] font-semibold active:scale-95 transition-transform"
                     style={{ color: '#775746' }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 15 }}>content_copy</span>
-                    <span>Copy</span>
+                    <span>{t.sent.copyRef.replace('!', '')}</span>
                   </button>
                 </div>
               </div>
@@ -130,17 +144,31 @@ export default function SentPage() {
               <div className="flex flex-col gap-3 pt-1">
                 <div className="flex justify-between items-start gap-3">
                   <span className="text-xs font-semibold shrink-0" style={{ color: '#4f4541' }}>Timestamp</span>
-                  <span className="text-xs font-medium text-right" style={{ color: '#140804' }}>{dateStr} · {timeStr}</span>
+                  <span className="text-xs font-medium text-right rtl:text-left" style={{ color: '#140804' }}>{dateStr} · {timeStr}</span>
                 </div>
                 <div className="flex justify-between items-start gap-3">
-                  <span className="text-xs font-semibold shrink-0" style={{ color: '#4f4541' }}>Issue Type</span>
+                  <span className="text-xs font-semibold shrink-0" style={{ color: '#4f4541' }}>{t.steps.issue}</span>
                   <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full" style={{ background: '#775746' }} />
-                    <span className="text-xs font-semibold" style={{ color: '#140804' }}>{state.selectedIssue?.label || '—'}</span>
+                    <span className="text-xs font-semibold" style={{ color: '#140804' }}>{translatedIssue}</span>
                   </div>
                 </div>
+                {state.photoPreviewUrl && (
+                  <div className="flex justify-between items-start gap-3">
+                    <span className="text-xs font-semibold shrink-0" style={{ color: '#4f4541' }}>{t.sent.photoAttached}</span>
+                    <span className="text-xs font-medium" style={{ color: '#140804' }}>1 {t.common.attached}</span>
+                  </div>
+                )}
+                {state.voiceNoteUrl && (
+                  <div className="flex justify-between items-start gap-3">
+                    <span className="text-xs font-semibold shrink-0" style={{ color: '#4f4541' }}>{t.sent.voiceAttached}</span>
+                    <span className="text-xs font-medium" style={{ color: '#140804' }}>
+                      {state.voiceDuration ? `${state.voiceDuration}s` : 'Audio'} · {t.common.attached}
+                    </span>
+                  </div>
+                )}
                 <div className="flex flex-col gap-1">
-                  <span className="text-xs font-semibold" style={{ color: '#4f4541' }}>Location</span>
+                  <span className="text-xs font-semibold" style={{ color: '#4f4541' }}>{t.steps.location}</span>
                   <div
                     className="flex items-start gap-1.5 rounded-lg p-2.5"
                     style={{ background: 'rgba(246,243,237,0.6)' }}
@@ -230,14 +258,38 @@ export default function SentPage() {
               </div>
             )}
 
-            {/* Draft saved note */}
+            {/* Timeline */}
             <div
-              className="rounded-xl p-4 flex items-center justify-between"
-              style={{ background: '#f6f3ed' }}
+              className="rounded-xl p-5 flex flex-col gap-3"
+              style={{ background: '#ffffff', border: '1px solid #e5dfd5', boxShadow: '0 2px 8px rgba(45,30,24,0.04)' }}
             >
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined" style={{ fontSize: 20, color: '#140804', fontVariationSettings: "'FILL' 1" }}>verified</span>
-                <span className="text-xs" style={{ color: '#4f4541' }}>Formal draft saved locally to your device</span>
+              <div className="flex items-center gap-1.5 pb-1">
+                <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#775746' }}>timeline</span>
+                <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#775746' }}>
+                  {t.sent.timelineTitle}
+                </span>
+              </div>
+              <div className="flex flex-col gap-2.5">
+                {[
+                  { text: t.sent.step1, done: true },
+                  { text: t.sent.step2, done: true },
+                  { text: t.sent.step3, done: false },
+                ].map((s, idx) => (
+                  <div key={idx} className="flex items-center gap-2.5 text-xs">
+                    <span
+                      className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: s.done ? '#2d1e18' : '#e5dfd5',
+                        color: s.done ? '#ffffff' : '#817470',
+                      }}
+                    >
+                      <span className="material-symbols-outlined" style={{ fontSize: 12 }}>
+                        {s.done ? 'check' : 'hourglass_empty'}
+                      </span>
+                    </span>
+                    <span style={{ color: s.done ? '#140804' : '#817470' }}>{s.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -253,7 +305,7 @@ export default function SentPage() {
                   boxShadow: '0 2px 8px rgba(45,30,24,0.15)',
                 }}
               >
-                <span>Report another issue</span>
+                <span>{t.sent.reportAnother}</span>
                 <span className="material-symbols-outlined" style={{ fontSize: 18 }}>add</span>
               </button>
               <p className="text-[11px] text-center tracking-wide pt-1" style={{ color: '#4f4541' }}>
