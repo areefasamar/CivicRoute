@@ -11,7 +11,7 @@ import ReportPage from './pages/ReportPage';
 import ReviewPage from './pages/ReviewPage';
 import SentPage from './pages/SentPage';
 
-// Realistic Mobile Phone Mockup Frame with True-to-Life Proportions
+// Realistic Front View Smartphone Mockup (Deep Purple Frame matching user reference)
 function PhoneFrame({ children }) {
   const { state } = useApp();
   const currentLang = state.lang || 'en';
@@ -19,9 +19,6 @@ function PhoneFrame({ children }) {
   const isRtl = t.dir === 'rtl';
   const isSindhi = currentLang === 'sd';
   const isUrdu = currentLang === 'ur';
-
-  // Phone display size preset: 'pro' (440px - true to life flagship), 'max' (475px - high-visibility presentation), 'compact' (395px)
-  const [sizePreset, setSizePreset] = useState('pro');
 
   const [time, setTime] = useState(() => {
     const d = new Date();
@@ -47,187 +44,130 @@ function PhoneFrame({ children }) {
     ? "'Noto Nastaliq Urdu', serif"
     : 'inherit';
 
-  // Size styling maps
-  const sizeStyles = {
-    compact: {
-      widthClass: 'sm:w-[395px]',
-      heightClass: 'sm:h-[830px]',
-      btnActionTop: 'top-[115px]',
-      btnVolUpTop: 'top-[160px]',
-      btnVolDownTop: 'top-[226px]',
-      btnPowerTop: 'top-[180px]',
-    },
-    pro: {
-      widthClass: 'sm:w-[440px]',
-      heightClass: 'sm:h-[890px]',
-      btnActionTop: 'top-[125px]',
-      btnVolUpTop: 'top-[175px]',
-      btnVolDownTop: 'top-[245px]',
-      btnPowerTop: 'top-[195px]',
-    },
-    max: {
-      widthClass: 'sm:w-[475px]',
-      heightClass: 'sm:h-[930px]',
-      btnActionTop: 'top-[135px]',
-      btnVolUpTop: 'top-[190px]',
-      btnVolDownTop: 'top-[265px]',
-      btnPowerTop: 'top-[210px]',
-    },
-  };
-
-  const currentSize = sizeStyles[sizePreset] || sizeStyles.pro;
-
   return (
     <div
-      className="min-h-screen py-3 sm:py-6 px-2 sm:px-6 flex flex-col items-center justify-center transition-colors relative"
+      className="min-h-screen w-full flex items-center justify-center p-2 sm:p-6 select-none transition-colors"
       style={{
-        background: 'radial-gradient(ellipse at 50% 25%, #f4eee6 0%, #dfd6c8 100%)',
+        background: '#1a191c', // Sleek dark studio presentation background matching the mockup viewer
       }}
     >
-      {/* Top Phone Size Switcher (for desktop presentations) */}
-      <div className="hidden sm:flex items-center gap-2 mb-3 z-30">
-        <div
-          className="flex items-center rounded-full p-1 gap-1"
-          style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(10px)', boxShadow: '0 2px 8px rgba(45,30,24,0.08)' }}
-        >
-          <span className="text-[11px] font-bold px-2.5 text-[#775746] flex items-center gap-1">
-            <span className="material-symbols-outlined" style={{ fontSize: 14 }}>smartphone</span>
-            Phone Size:
-          </span>
-          <button
-            type="button"
-            onClick={() => setSizePreset('compact')}
-            className="px-2.5 py-1 rounded-full text-xs font-semibold transition-all"
-            style={{
-              background: sizePreset === 'compact' ? '#140804' : 'transparent',
-              color: sizePreset === 'compact' ? '#ffffff' : '#4f4541',
-            }}
-          >
-            Compact (395px)
-          </button>
-          <button
-            type="button"
-            onClick={() => setSizePreset('pro')}
-            className="px-3 py-1 rounded-full text-xs font-semibold transition-all"
-            style={{
-              background: sizePreset === 'pro' ? '#140804' : 'transparent',
-              color: sizePreset === 'pro' ? '#ffffff' : '#4f4541',
-            }}
-          >
-            Original / Pro (440px)
-          </button>
-          <button
-            type="button"
-            onClick={() => setSizePreset('max')}
-            className="px-2.5 py-1 rounded-full text-xs font-semibold transition-all"
-            style={{
-              background: sizePreset === 'max' ? '#140804' : 'transparent',
-              color: sizePreset === 'max' ? '#ffffff' : '#4f4541',
-            }}
-          >
-            Large / Max (475px)
-          </button>
-        </div>
-      </div>
-
-      {/* Outer Mobile Phone Chassis (Hardware Body) */}
-      <div className="relative group flex flex-col items-center">
-        {/* Left Hardware Buttons (Action + Volume Up + Volume Down) */}
-        <div className={`hidden sm:block absolute -left-[14px] ${currentSize.btnActionTop} w-[4px] h-[30px] bg-[#3a3530] rounded-l-[3px] shadow-xs`} />
-        <div className={`hidden sm:block absolute -left-[14px] ${currentSize.btnVolUpTop} w-[4px] h-[56px] bg-[#3a3530] rounded-l-[3px] shadow-xs`} />
-        <div className={`hidden sm:block absolute -left-[14px] ${currentSize.btnVolDownTop} w-[4px] h-[56px] bg-[#3a3530] rounded-l-[3px] shadow-xs`} />
-
-        {/* Right Hardware Button (Power / Lock) */}
-        <div className={`hidden sm:block absolute -right-[14px] ${currentSize.btnPowerTop} w-[4px] h-[82px] bg-[#3a3530] rounded-r-[3px] shadow-xs`} />
-
-        {/* Main Phone Boundary */}
-        <div
-          className={`relative w-full ${currentSize.widthClass} h-screen ${currentSize.heightClass} sm:max-h-[92vh] bg-[#1c1917] sm:rounded-[56px] p-0 sm:p-[12px] sm:shadow-[0_30px_90px_-15px_rgba(20,8,4,0.5),0_0_0_1px_rgba(255,255,255,0.15)_inset,0_0_0_4px_#2b2723,0_0_0_7px_#181512] transition-all duration-300`}
-        >
-          {/* Inner Phone Screen Display */}
+      {/* White Presentation Card (matches the uploaded mockup showcase stage) */}
+      <div
+        className="w-full max-w-[480px] sm:bg-[#ffffff] sm:rounded-[36px] p-2 sm:p-8 flex flex-col items-center justify-center sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.45)] relative"
+      >
+        {/* The Smartphone Device */}
+        <div className="relative flex flex-col items-center w-full max-w-[340px] sm:max-w-[350px]">
+          {/* Left Hardware Buttons (Mute / Action + Volume Up + Volume Down) */}
           <div
-            className="w-full h-full sm:rounded-[44px] overflow-hidden bg-[#fcf9f3] flex flex-col relative shadow-inner select-none"
+            className="hidden sm:block absolute -left-[5px] top-[95px] w-[4px] h-[22px] rounded-l-[3px] shadow-xs"
+            style={{ background: '#392a4a' }}
+          />
+          <div
+            className="hidden sm:block absolute -left-[5px] top-[135px] w-[4px] h-[45px] rounded-l-[3px] shadow-xs"
+            style={{ background: '#392a4a' }}
+          />
+          <div
+            className="hidden sm:block absolute -left-[5px] top-[192px] w-[4px] h-[45px] rounded-l-[3px] shadow-xs"
+            style={{ background: '#392a4a' }}
+          />
+
+          {/* Right Hardware Button (Power / Lock) */}
+          <div
+            className="hidden sm:block absolute -right-[5px] top-[150px] w-[4px] h-[68px] rounded-r-[3px] shadow-xs"
+            style={{ background: '#392a4a' }}
+          />
+
+          {/* Phone Outer Chassis (Metallic Deep Purple Frame) */}
+          <div
+            className="w-full h-screen sm:h-[720px] sm:max-h-[82vh] rounded-none sm:rounded-[46px] p-0 sm:p-[8px] relative transition-all"
             style={{
-              fontFamily: fontStyle,
+              background: 'linear-gradient(155deg, #4b3961 0%, #20172c 45%, #3d2d50 100%)',
+              boxShadow:
+                '0 20px 50px -12px rgba(25, 12, 38, 0.5), inset 0 0 0 1px rgba(255,255,255,0.22), 0 0 0 2px #261a35',
             }}
           >
-            {/* Top Phone Hardware / Status Bar */}
+            {/* Inner Phone Screen Display ("The Glass") */}
             <div
-              className="w-full h-12 px-7 pt-2.5 pb-1 flex items-center justify-between flex-shrink-0 z-50 bg-[#fcf9f3] select-none"
-              dir="ltr"
-            >
-              {/* Digital Clock */}
-              <span className="text-[13px] font-bold tracking-tight text-[#140804] w-14 text-left">
-                {time}
-              </span>
-
-              {/* Dynamic Island Pill */}
-              <div
-                className="w-[118px] h-[28px] bg-[#000000] rounded-full flex items-center justify-between px-3 shadow-sm"
-              >
-                {/* Camera Lens */}
-                <div className="w-2.5 h-2.5 rounded-full bg-[#0a0a14] ring-1 ring-[#1e1e30] flex items-center justify-center">
-                  <div className="w-1 h-1 rounded-full bg-[#1e2040]" />
-                </div>
-                {/* Sensor indicator */}
-                <div className="w-1.5 h-1.5 rounded-full bg-[#080808]" />
-              </div>
-
-              {/* Network / Wi-Fi / Battery Icons */}
-              <div className="flex items-center gap-1.5 text-[#140804] w-14 justify-end">
-                {/* Cellular Signal (4 bars) */}
-                <div className="flex items-end gap-[1.5px] h-2.5">
-                  <span className="w-[2.5px] h-[3px] bg-[#140804] rounded-xs" />
-                  <span className="w-[2.5px] h-[5px] bg-[#140804] rounded-xs" />
-                  <span className="w-[2.5px] h-[7px] bg-[#140804] rounded-xs" />
-                  <span className="w-[2.5px] h-[9px] bg-[#140804] rounded-xs" />
-                </div>
-
-                {/* Wi-Fi Icon */}
-                <span className="material-symbols-outlined leading-none" style={{ fontSize: 15 }}>
-                  wifi
-                </span>
-
-                {/* Battery Icon */}
-                <div className="flex items-center gap-[1px]">
-                  <div className="w-[20px] h-[10px] rounded-[3px] border border-[#140804] p-[1px] flex items-center">
-                    <div className="w-[13px] h-full bg-[#140804] rounded-[1.5px]" />
-                  </div>
-                  <div className="w-[1.5px] h-[4px] bg-[#140804] rounded-r-xs" />
-                </div>
-              </div>
-            </div>
-
-            {/* Scrollable App Screen Content */}
-            <div
-              dir={isRtl ? 'rtl' : 'ltr'}
-              className="flex-1 w-full overflow-y-auto overflow-x-hidden flex flex-col relative select-text"
+              className="w-full h-full sm:rounded-[38px] overflow-hidden bg-[#fcf9f3] flex flex-col relative select-none shadow-inner"
               style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
+                fontFamily: fontStyle,
               }}
             >
-              {children}
-            </div>
+              {/* Top Phone Status Bar + Dynamic Island */}
+              <div
+                className="w-full h-10 px-5 pt-2 pb-1 flex items-center justify-between flex-shrink-0 z-50 bg-[#fcf9f3]"
+                dir="ltr"
+              >
+                {/* Time */}
+                <span className="text-[12px] font-bold tracking-tight text-[#140804] w-12 text-left">
+                  {time}
+                </span>
 
-            {/* Bottom Home Indicator Bar */}
-            <div
-              className="w-full h-6 flex items-center justify-center flex-shrink-0 z-50 bg-[#fcf9f3] pointer-events-none select-none"
-            >
-              <div className="w-36 h-[4.5px] bg-[#140804]/40 rounded-full" />
-            </div>
+                {/* Dynamic Island (Pill Cutout) */}
+                <div
+                  className="w-[94px] h-[22px] bg-[#000000] rounded-full flex items-center justify-between px-2.5 shadow-xs"
+                >
+                  {/* Camera Lens */}
+                  <div className="w-2 h-2 rounded-full bg-[#0a0a14] ring-1 ring-[#232338] flex items-center justify-center">
+                    <div className="w-0.5 h-0.5 rounded-full bg-[#202048]" />
+                  </div>
+                  {/* Sensor dot */}
+                  <div className="w-1 h-1 rounded-full bg-[#080808]" />
+                </div>
 
-            {/* Subtle Screen Gloss Overlay */}
-            <div
-              className="pointer-events-none absolute inset-0 z-40 rounded-[44px] bg-gradient-to-tr from-transparent via-white/[0.025] to-transparent"
-            />
+                {/* Status Icons */}
+                <div className="flex items-center gap-1.5 text-[#140804] w-12 justify-end">
+                  {/* Cellular 4 bars */}
+                  <div className="flex items-end gap-[1px] h-2">
+                    <span className="w-[2px] h-[2.5px] bg-[#140804] rounded-xs" />
+                    <span className="w-[2px] h-[4px] bg-[#140804] rounded-xs" />
+                    <span className="w-[2px] h-[6px] bg-[#140804] rounded-xs" />
+                    <span className="w-[2px] h-[8px] bg-[#140804] rounded-xs" />
+                  </div>
+
+                  {/* Wi-Fi Icon */}
+                  <span className="material-symbols-outlined leading-none" style={{ fontSize: 13 }}>
+                    wifi
+                  </span>
+
+                  {/* Battery Icon */}
+                  <div className="flex items-center gap-[1px]">
+                    <div className="w-[17px] h-[9px] rounded-[2.5px] border border-[#140804] p-[1px] flex items-center">
+                      <div className="w-[10px] h-full bg-[#140804] rounded-[1px]" />
+                    </div>
+                    <div className="w-[1px] h-[3px] bg-[#140804] rounded-r-xs" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Scrollable App Viewport */}
+              <div
+                dir={isRtl ? 'rtl' : 'ltr'}
+                className="flex-1 w-full overflow-y-auto overflow-x-hidden flex flex-col relative select-text"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                }}
+              >
+                {children}
+              </div>
+
+              {/* Bottom Home Indicator */}
+              <div
+                className="w-full h-5 flex items-center justify-center flex-shrink-0 z-50 bg-[#fcf9f3] pointer-events-none"
+              >
+                <div className="w-28 h-[3.5px] bg-[#140804]/35 rounded-full" />
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Desktop Presentation Caption */}
-        <div className="hidden sm:flex items-center gap-2 mt-3 text-[#775746] text-xs font-medium">
-          <span className="w-2 h-2 rounded-full bg-[#775746]/60 animate-pulse" />
-          <span>CivicRoute Mobile Experience • Karachi Municipal Services</span>
+          {/* Realistic Ellipse Ground Drop Shadow (matching the vector mockup in the image) */}
+          <div
+            className="hidden sm:block w-48 h-3.5 rounded-[100%] blur-sm mt-3.5 transition-all"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(30,15,45,0.45) 0%, rgba(30,15,45,0) 70%)',
+            }}
+          />
         </div>
       </div>
     </div>
