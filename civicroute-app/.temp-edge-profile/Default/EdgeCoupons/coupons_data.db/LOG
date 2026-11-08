@@ -1,0 +1,5 @@
+2026/11/08-22:22:14.277 7528 Creating DB C:\Users\HP\OneDrive\Desktop\CivicRoute\civicroute-app\.temp-edge-profile\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/11/08-22:22:14.329 7528 Reusing MANIFEST C:\Users\HP\OneDrive\Desktop\CivicRoute\civicroute-app\.temp-edge-profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/11/08-22:22:16.289 5518 Level-0 table #5: started
+2026/11/08-22:22:16.294 5518 Level-0 table #5: 683273 bytes OK
+2026/11/08-22:22:16.298 5518 Delete type=0 #3
