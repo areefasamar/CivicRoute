@@ -91,7 +91,7 @@ export default function ReportPage() {
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
       <AppHeader title={t.headers.report} showBack={true} />
-      <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
+      <main className="flex-1 w-full mx-auto pb-10">
         <div className="px-5 flex flex-col gap-5 pb-4">
           <StepBar currentStep={2} completedUpTo={1} />
 

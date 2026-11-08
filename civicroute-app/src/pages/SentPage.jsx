@@ -47,31 +47,10 @@ export default function SentPage() {
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
       <AppHeader title={t.headers.sent} showBack={false} />
-      <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
+      <main className="flex-1 w-full mx-auto pb-10">
         <div className="flex flex-col w-full">
-          {/* Demo mode bar */}
-          <div className="px-5 pt-2 pb-1 flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <span
-                className="w-2 h-2 rounded-full animate-pulse"
-                style={{ background: '#775746' }}
-              />
-              <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: '#775746' }}>
-                {t.sent.simComplete}
-              </span>
-            </div>
-            <span
-              className="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full"
-              style={{ background: '#ebe8e2', color: '#4f4541' }}
-            >
-              {t.sent.demoMode}
-            </span>
-          </div>
-
-          <StepBar currentStep={4} completedUpTo={4} />
-
           {/* Success hero */}
-          <div className="px-5 pt-5 pb-4 text-center flex flex-col items-center">
+          <div className="px-5 pt-6 pb-4 text-center flex flex-col items-center">
             <div className="relative mb-5">
               <div
                 className="w-16 h-16 rounded-full flex items-center justify-center shadow-md"

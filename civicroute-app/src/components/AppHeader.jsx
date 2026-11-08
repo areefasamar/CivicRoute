@@ -18,14 +18,14 @@ export default function AppHeader({ title, showBack = true }) {
 
   return (
     <header
-      className="fixed top-0 w-full z-50 pt-safe"
+      className="sticky top-0 w-full z-40"
       style={{
         background: 'rgba(252,249,243,0.92)',
         backdropFilter: 'blur(16px)',
         boxShadow: '0 1px 8px rgba(45,30,24,0.05)',
       }}
     >
-      <div className="h-16 px-4 flex items-center justify-between max-w-[390px] mx-auto">
+      <div className="h-14 px-4 flex items-center justify-between w-full">
         <div className="flex items-center gap-1.5 min-w-0">
           {showBack && (
             <button

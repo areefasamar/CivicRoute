@@ -39,7 +39,7 @@ export default function TermsPage() {
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
       <AppHeader title={t.headers.terms} showBack={true} />
-      <main className="flex-1 max-w-[390px] w-full mx-auto px-5 pt-20 pb-10">
+      <main className="flex-1 w-full mx-auto px-5 pt-3 pb-10">
         {/* Demo tag */}
         <div className="flex items-center justify-between py-1 mb-5">
           <div className="flex items-center gap-1.5" style={{ color: '#775746' }}>

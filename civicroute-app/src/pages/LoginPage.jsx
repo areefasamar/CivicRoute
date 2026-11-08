@@ -57,7 +57,7 @@ export default function LoginPage() {
       className="page-enter min-h-screen flex flex-col"
       style={{ background: '#fcf9f3', direction: isRtl ? 'rtl' : 'ltr' }}
     >
-      <main className="flex-1 max-w-[390px] w-full mx-auto px-5 flex flex-col pb-10">
+      <main className="flex-1 w-full mx-auto px-5 flex flex-col pb-10">
         {/* Top bar */}
         <div className="flex items-center justify-between py-4">
           <Logo className="h-8 w-auto" />

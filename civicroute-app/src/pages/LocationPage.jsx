@@ -33,24 +33,7 @@ export default function LocationPage() {
   return (
     <div className="page-enter min-h-screen flex flex-col" style={{ background: '#fcf9f3' }}>
       <AppHeader title={t.headers.location} showBack={true} />
-      <main className="flex-1 max-w-[390px] w-full mx-auto pt-16 pb-10">
-
-        {/* Demo bar */}
-        <div className="px-5 pt-2 pb-1 flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>verified_user</span>
-            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: '#4f4541' }}>
-              {t.terms.demoTag}
-            </span>
-          </div>
-          <span
-            className="text-[11px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full"
-            style={{ background: '#ebe8e2', color: '#4f4541' }}
-          >
-            {t.common.demo}
-          </span>
-        </div>
-
+      <main className="flex-1 w-full mx-auto pb-10">
         <StepBar currentStep={1} completedUpTo={0} />
 
         {/* Section header */}
