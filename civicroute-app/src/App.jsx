@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
 import { translations } from './data/translations';
 import { RequireAuth, RequireTerms, RequireArea, RequireIssue, RequireSent } from './components/Guards';
@@ -14,11 +14,21 @@ import SentPage from './pages/SentPage';
 // Desktop Phone-Frame Wrapper with Proportional Sizing
 function PhoneFrame({ children }) {
   const { state } = useApp();
+  const location = useLocation();
+  const scrollRef = useRef(null);
+
   const currentLang = state.lang || 'en';
   const t = translations[currentLang] || translations.en;
   const isRtl = t.dir === 'rtl';
   const isSindhi = currentLang === 'sd';
   const isUrdu = currentLang === 'ur';
+
+  // Automatically scroll back to top when switching pages
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [location.pathname]);
 
   const [time, setTime] = useState(() => {
     const d = new Date();
@@ -94,7 +104,11 @@ function PhoneFrame({ children }) {
             </div>
 
             {/* Scrollable Screen Content */}
-            <div dir={isRtl ? 'rtl' : 'ltr'} className="phone-scroll-content select-text">
+            <div
+              ref={scrollRef}
+              dir={isRtl ? 'rtl' : 'ltr'}
+              className="phone-scroll-content select-text"
+            >
               {children}
             </div>
 
