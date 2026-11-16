@@ -1,4 +1,4 @@
-// CivicRoute SVG Logo — inline so it works without external image URLs
+// CivicRoute SVG Logo — locked to LTR with textAnchor start so it never reverses or collides in RTL
 export default function Logo({ className = 'h-8 w-auto' }) {
   return (
     <svg
@@ -7,6 +7,8 @@ export default function Logo({ className = 'h-8 w-auto' }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="CivicRoute"
+      dir="ltr"
+      style={{ direction: 'ltr', unicodeBidi: 'isolate' }}
     >
       {/* Map pin icon */}
       <circle cx="12" cy="12" r="8" fill="#2d1e18" />
@@ -17,11 +19,20 @@ export default function Logo({ className = 'h-8 w-auto' }) {
       <text
         x="26"
         y="20"
-        fontFamily="Plus Jakarta Sans, sans-serif"
+        fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
         fontSize="14"
         fontWeight="700"
         fill="#140804"
         letterSpacing="-0.3"
+        dir="ltr"
+        direction="ltr"
+        textAnchor="start"
+        unicodeBidi="bidi-override"
+        style={{
+          direction: 'ltr',
+          unicodeBidi: 'bidi-override',
+          textAnchor: 'start',
+        }}
       >
         CivicRoute
       </text>

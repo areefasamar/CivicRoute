@@ -77,7 +77,7 @@ export default function LoginPage() {
                 role="radio"
                 aria-checked={lang === l.code}
                 onClick={() => setLang(l.code)}
-                className="px-2 sm:px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0"
+                className="px-1.5 sm:px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0"
                 style={{
                   background: lang === l.code ? '#ffffff' : 'transparent',
                   color: lang === l.code ? '#140804' : '#4f4541',
