@@ -25,14 +25,15 @@ export default function AppHeader({ title, showBack = true }) {
         boxShadow: '0 1px 8px rgba(45,30,24,0.05)',
       }}
     >
-      <div className="h-14 px-4 flex items-center justify-between w-full">
-        <div className="flex items-center gap-1.5 min-w-0">
+      <div className="h-14 ps-3.5 pe-3.5 flex items-center justify-between gap-2 w-full">
+        {/* Logo and Back/Title Section */}
+        <div className="flex items-center gap-1.5 min-w-0 flex-shrink overflow-hidden">
           {showBack && (
             <button
               type="button"
               aria-label={t.common.back}
               onClick={() => navigate(-1)}
-              className="w-9 h-9 -ml-1 flex items-center justify-center rounded-full text-primary hover:bg-[#ebe8e2] active:scale-95 transition-all flex-shrink-0"
+              className="w-8 h-8 -ms-1 flex items-center justify-center rounded-full text-primary hover:bg-[#ebe8e2] active:scale-95 transition-all flex-shrink-0"
               style={{ color: '#140804' }}
             >
               <span
@@ -43,18 +44,24 @@ export default function AppHeader({ title, showBack = true }) {
               </span>
             </button>
           )}
-          <Logo className="h-6 w-auto flex-shrink-0" />
-          <span
-            className="font-bold tracking-tight text-sm truncate"
-            style={{ color: '#140804' }}
-          >
-            {title ? title : 'CivicRoute'}
-          </span>
+
+          <div className="flex-shrink-0 whitespace-nowrap flex items-center">
+            <Logo className="h-6 w-auto flex-shrink-0 whitespace-nowrap" />
+          </div>
+
+          {title && (
+            <span
+              className="font-bold tracking-tight text-xs truncate min-w-0 ms-1"
+              style={{ color: '#140804' }}
+            >
+              {title}
+            </span>
+          )}
         </div>
 
         {/* Language selector toggle */}
         <div
-          className="flex items-center rounded-full p-0.5 gap-0.5 flex-shrink-0"
+          className="flex items-center rounded-full p-0.5 gap-0.5 flex-shrink min-w-0"
           style={{ background: '#ebe8e2', boxShadow: 'inset 0 1px 2px rgba(45,30,24,0.06)' }}
           role="radiogroup"
           aria-label="Language selection"
@@ -68,7 +75,7 @@ export default function AppHeader({ title, showBack = true }) {
                 role="radio"
                 aria-checked={isSelected}
                 onClick={() => setLang(l.code)}
-                className="px-2 py-0.5 rounded-full text-[11px] font-semibold transition-all duration-150"
+                className="px-1.5 sm:px-2 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-semibold transition-all duration-150 whitespace-nowrap flex-shrink-0"
                 style={{
                   background: isSelected ? '#ffffff' : 'transparent',
                   color: isSelected ? '#140804' : '#775746',

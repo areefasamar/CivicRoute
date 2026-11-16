@@ -59,11 +59,13 @@ export default function LoginPage() {
     >
       <main className="flex-1 w-full mx-auto px-5 flex flex-col pb-10">
         {/* Top bar */}
-        <div className="flex items-center justify-between py-4">
-          <Logo className="h-8 w-auto" />
+        <div className="flex items-center justify-between gap-2 py-4">
+          <div className="flex-shrink-0 whitespace-nowrap flex items-center">
+            <Logo className="h-8 w-auto flex-shrink-0 whitespace-nowrap" />
+          </div>
           {/* Language toggle: 3 options */}
           <div
-            className="flex items-center rounded-full p-0.5 gap-0.5"
+            className="flex items-center rounded-full p-0.5 gap-0.5 flex-shrink min-w-0"
             style={{ background: '#ebe8e2' }}
             role="radiogroup"
             aria-label="Language selection"
@@ -75,7 +77,7 @@ export default function LoginPage() {
                 role="radio"
                 aria-checked={lang === l.code}
                 onClick={() => setLang(l.code)}
-                className="px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200"
+                className="px-2 sm:px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap flex-shrink-0"
                 style={{
                   background: lang === l.code ? '#ffffff' : 'transparent',
                   color: lang === l.code ? '#140804' : '#4f4541',
@@ -206,7 +208,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(v => !v)}
-                className="text-xs ml-2 font-medium"
+                className="text-xs ms-2 font-medium"
                 style={{ color: '#817470' }}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
