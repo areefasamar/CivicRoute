@@ -258,7 +258,7 @@ export default function ReviewPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 pl-2 flex-shrink-0">
+                <div className="flex items-center gap-1.5 ps-2 flex-shrink-0">
                   <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>photo_camera</span>
                   <span className="text-xs font-semibold" style={{ color: '#775746' }}>{t.common.attached}</span>
                 </div>
@@ -289,7 +289,7 @@ export default function ReviewPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 pl-2 flex-shrink-0">
+                <div className="flex items-center gap-1.5 ps-2 flex-shrink-0">
                   <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#4f4541' }}>graphic_eq</span>
                   <span className="text-xs font-semibold" style={{ color: '#775746' }}>{t.common.attached}</span>
                 </div>

@@ -198,6 +198,16 @@
     justify-content: center;
   }
 
+  .phone-hardware-buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--phone-h);
+    pointer-events: none;
+    z-index: 10;
+  }
+
   .phone-device-chassis {
     height: var(--phone-h);
     max-height: 900px;
@@ -296,8 +306,9 @@
     height: calc(var(--phone-h) * 0.032);
     top: calc(var(--phone-h) * 0.13);
     left: calc(var(--btn-w) * -1);
-    background-color: #392a4a;
+    background: linear-gradient(to right, #44345a, #523f6d);
     border-radius: 3px 0 0 3px;
+    box-shadow: inset 1px 0 1px rgba(255, 255, 255, 0.2);
   }
 
   .phone-btn-volup {
@@ -306,8 +317,9 @@
     height: calc(var(--phone-h) * 0.06);
     top: calc(var(--phone-h) * 0.185);
     left: calc(var(--btn-w) * -1);
-    background-color: #392a4a;
+    background: linear-gradient(to right, #44345a, #523f6d);
     border-radius: 3px 0 0 3px;
+    box-shadow: inset 1px 0 1px rgba(255, 255, 255, 0.2);
   }
 
   .phone-btn-voldown {
@@ -316,8 +328,9 @@
     height: calc(var(--phone-h) * 0.06);
     top: calc(var(--phone-h) * 0.265);
     left: calc(var(--btn-w) * -1);
-    background-color: #392a4a;
+    background: linear-gradient(to right, #44345a, #523f6d);
     border-radius: 3px 0 0 3px;
+    box-shadow: inset 1px 0 1px rgba(255, 255, 255, 0.2);
   }
 
   .phone-btn-power {
@@ -326,8 +339,9 @@
     height: calc(var(--phone-h) * 0.09);
     top: calc(var(--phone-h) * 0.21);
     right: calc(var(--btn-w) * -1);
-    background-color: #392a4a;
+    background: linear-gradient(to left, #44345a, #523f6d);
     border-radius: 0 3px 3px 0;
+    box-shadow: inset -1px 0 1px rgba(255, 255, 255, 0.2);
   }
 
   .phone-ground-shadow {

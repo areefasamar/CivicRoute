@@ -265,7 +265,7 @@ export default function VoiceRecorder({
               </span>
             </button>
 
-            <div className="flex flex-col min-w-0 flex-1 pr-2">
+            <div className="flex flex-col min-w-0 flex-1 pe-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold truncate" style={{ color: '#140804' }}>
                   {t?.voiceAttached || 'Voice note attached'}

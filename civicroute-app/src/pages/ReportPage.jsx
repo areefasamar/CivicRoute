@@ -125,7 +125,7 @@ export default function ReportPage() {
             <button
               type="button"
               onClick={() => navigate('/location')}
-              className="font-semibold text-sm flex-shrink-0 ml-2 hover:underline"
+              className="font-semibold text-sm flex-shrink-0 ms-2 hover:underline"
               style={{ color: '#775746' }}
             >
               {t.common.change}
